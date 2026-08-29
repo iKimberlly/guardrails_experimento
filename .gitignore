@@ -1,0 +1,17 @@
+# Environment and local credentials
+.env
+
+# Python virtual environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+
+# Test and tooling output
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Generated benchmark output (retain directory placeholder)
+results/*.csv
+!results/.gitkeep
