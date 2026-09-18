@@ -1,33 +1,48 @@
 import time
-from fastapi import FastAPI, HTTPException
+from pathlib import Path
+
+from fastapi import FastAPI, HTTPException, Request, Header
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from .models import ValidationRequest, ValidationResponse
 from .regex_guard import validate_regex
 from .agent import classify
 
-from pathlib import Path
+# IMPORTANTE:
+# database.py está na raiz do projeto
+from .database import (
+    get_connection,
+    get_user_vehicles,
+    get_user_vehicle,
+    get_user_positions,
+)
 
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 app = FastAPI(
     title="Guardrails Experimental Environment",
-    version="0.1.0",
+    version="0.2.0"
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Arquivos estáticos
 app.mount(
     "/static",
     StaticFiles(directory=BASE_DIR / "static"),
     name="static"
 )
 
+# Templates
 templates = Jinja2Templates(
     directory=BASE_DIR / "templates"
 )
+
+
+# ============================================================
+# INTERFACE
+# ============================================================
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
@@ -36,86 +51,231 @@ async def index(request: Request):
         {"request": request}
     )
 
+
+# ============================================================
+# USUÁRIOS DE TESTE
+# ============================================================
+
+@app.get("/users")
+def get_users():
+    """
+    Retorna os usuários disponíveis para o experimento.
+    """
+
+    conn = get_connection()
+
+    rows = conn.execute("""
+        SELECT id, nome, email
+        FROM usuarios
+        ORDER BY id
+    """).fetchall()
+
+    conn.close()
+
+    return {
+        "users": [dict(row) for row in rows]
+    }
+
+
+# ============================================================
+# CONSULTA SEGURA DOS VEÍCULOS
+# ============================================================
+
+@app.get("/my/vehicles")
+def my_vehicles(
+    x_user_id: int = Header(..., alias="X-User-ID")
+):
+    """
+    Retorna somente os veículos pertencentes
+    ao usuário atualmente selecionado.
+    """
+
+    # Verifica se o usuário existe
+    conn = get_connection()
+
+    user = conn.execute("""
+        SELECT id, nome, email
+        FROM usuarios
+        WHERE id = ?
+    """, (x_user_id,)).fetchone()
+
+    conn.close()
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Usuário de teste inválido."
+        )
+
+    vehicles = get_user_vehicles(x_user_id)
+
+    return {
+        "usuario": dict(user),
+        "total": len(vehicles),
+        "veiculos": vehicles
+    }
+
+
+# ============================================================
+# CONSULTA DE UM VEÍCULO ESPECÍFICO
+# ============================================================
+
+@app.get("/my/vehicles/{veiculo_id}")
+def my_vehicle(
+    veiculo_id: int,
+    x_user_id: int = Header(..., alias="X-User-ID")
+):
+    """
+    Retorna um veículo somente se ele pertencer
+    ao usuário selecionado.
+    """
+
+    vehicle = get_user_vehicle(
+        x_user_id,
+        veiculo_id
+    )
+
+    if not vehicle:
+        raise HTTPException(
+            status_code=404,
+            detail="Veículo não encontrado."
+        )
+
+    return vehicle
+
+
+# ============================================================
+# POSIÇÕES DE UM VEÍCULO
+# ============================================================
+
+@app.get("/my/vehicles/{veiculo_id}/positions")
+def my_vehicle_positions(
+    veiculo_id: int,
+    x_user_id: int = Header(..., alias="X-User-ID")
+):
+    """
+    Retorna posições somente de veículos
+    pertencentes ao usuário selecionado.
+    """
+
+    # Primeiro verifica a propriedade
+    vehicle = get_user_vehicle(
+        x_user_id,
+        veiculo_id
+    )
+
+    if not vehicle:
+        raise HTTPException(
+            status_code=404,
+            detail="Veículo não encontrado."
+        )
+
+    positions = get_user_positions(
+        x_user_id,
+        veiculo_id
+    )
+
+    return {
+        "veiculo_id": veiculo_id,
+        "total": len(positions),
+        "posicoes": positions
+    }
+
+
+# ============================================================
+# GUARDRAIL — REGEX
+# ============================================================
+
 def run_regex(prompt: str):
     start = time.perf_counter()
+
     result = validate_regex(prompt)
+
     latency = (time.perf_counter() - start) * 1000
 
-    return ValidationResponse(
-        approved=result.approved,
-        mode="regex",
-        layer="regex",
-        reasons=result.reasons,
-        sanitized_prompt=result.sanitized_prompt,
-        matched_rules=result.matched_rules,
-        latency_ms=round(latency, 3),
-    )
+    return {
+        **result,
+        "latency_ms": round(latency, 2),
+        "mode": "regex"
+    }
+
+
+@app.post(
+    "/validate/regex",
+    response_model=ValidationResponse
+)
+def validate_regex_endpoint(
+    request: ValidationRequest
+):
+    return run_regex(request.prompt)
+
+
+# ============================================================
+# GUARDRAIL — AGENT
+# ============================================================
 
 def run_agent(prompt: str):
     start = time.perf_counter()
-    result, model = classify(prompt)
+
+    result = classify(prompt)
+
     latency = (time.perf_counter() - start) * 1000
 
-    return ValidationResponse(
-        approved=result["approved"],
-        mode="agent",
-        layer="agent",
-        reasons=result["reasons"],
-        sanitized_prompt=result.get("sanitized_prompt", prompt),
-        matched_rules=[],
-        latency_ms=round(latency, 3),
-        agent_model=model,
-    )
+    return {
+        **result,
+        "latency_ms": round(latency, 2),
+        "mode": "agent"
+    }
+
+
+@app.post(
+    "/validate/agent",
+    response_model=ValidationResponse
+)
+def validate_agent_endpoint(
+    request: ValidationRequest
+):
+    return run_agent(request.prompt)
+
+
+# ============================================================
+# GUARDRAIL — COMBINED
+# ============================================================
 
 def run_combined(prompt: str):
     start = time.perf_counter()
 
-    regex = validate_regex(prompt)
-    if not regex.approved:
-        latency = (time.perf_counter() - start) * 1000
-        return ValidationResponse(
-            approved=False,
-            mode="combined",
-            layer="regex",
-            reasons=regex.reasons,
-            sanitized_prompt=regex.sanitized_prompt,
-            matched_rules=regex.matched_rules,
-            latency_ms=round(latency, 3),
-            agent_model=None,
-        )
+    regex_result = validate_regex(prompt)
 
-    agent_result, model = classify(regex.sanitized_prompt)
+    # Regex bloqueou
+    if not regex_result["approved"]:
+        latency = (time.perf_counter() - start) * 1000
+
+        return {
+            **regex_result,
+            "latency_ms": round(latency, 2),
+            "mode": "combined",
+            "layer": "regex"
+        }
+
+    # Regex permitiu → envia para agente
+    agent_result = classify(prompt)
+
     latency = (time.perf_counter() - start) * 1000
 
-    return ValidationResponse(
-        approved=agent_result["approved"],
-        mode="combined",
-        layer="agent",
-        reasons=agent_result["reasons"],
-        sanitized_prompt=agent_result.get("sanitized_prompt", regex.sanitized_prompt),
-        matched_rules=[],
-        latency_ms=round(latency, 3),
-        agent_model=model,
-    )
+    return {
+        **agent_result,
+        "latency_ms": round(latency, 2),
+        "mode": "combined",
+        "layer": "agent"
+    }
 
-@app.get("/")
-def root():
-    return {"status": "ok", "message": "Ambiente experimental de guardrails ativo."}
 
-@app.post("/validate/regex", response_model=ValidationResponse)
-def validate_regex_endpoint(request: ValidationRequest):
-    return run_regex(request.prompt)
-
-@app.post("/validate/agent", response_model=ValidationResponse)
-def validate_agent_endpoint(request: ValidationRequest):
-    try:
-        return run_agent(request.prompt)
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
-
-@app.post("/validate/combined", response_model=ValidationResponse)
-def validate_combined_endpoint(request: ValidationRequest):
-    try:
-        return run_combined(request.prompt)
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+@app.post(
+    "/validate/combined",
+    response_model=ValidationResponse
+)
+def validate_combined_endpoint(
+    request: ValidationRequest
+):
+    return run_combined(request.prompt)

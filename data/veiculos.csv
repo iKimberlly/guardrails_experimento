@@ -1,0 +1,141 @@
+id,usuario_id,categoria,placa,marca,modelo,ano,cidade,status,velocidade_kmh,latitude,longitude
+1,101,Carro,TEST0001,Toyota,Corolla,2021,Olinda,em_manutencao,0,-8.003323,-34.8743
+2,102,Carro,TEST0002,Chevrolet,Onix,2023,Maceió,ativo,17,-9.658799,-35.719972
+3,103,Carro,TEST0003,Volkswagen,Polo,2025,Caruaru,inativo,0,-8.273541,-35.969032
+4,104,Carro,TEST0004,Toyota,Corolla,2021,Garanhuns,em_manutencao,0,-8.874913,-36.513122
+5,105,Carro,TEST0005,Chevrolet,Onix,2023,Salvador,ativo,47,-12.980823,-38.520408
+6,106,Carro,TEST0006,Volkswagen,Polo,2025,Fortaleza,inativo,0,-3.743154,-38.526486
+7,107,Carro,TEST0007,Toyota,Corolla,2021,Recife,em_manutencao,0,-8.066539,-34.889046
+8,108,Carro,TEST0008,Chevrolet,Onix,2023,Olinda,ativo,77,-8.002905,-34.853502
+9,109,Carro,TEST0009,Volkswagen,Polo,2025,Maceió,inativo,0,-9.660982,-35.705329
+10,110,Carro,TEST0010,Toyota,Corolla,2021,Caruaru,em_manutencao,0,-8.270623,-35.99584
+11,101,Carro,TEST0011,Chevrolet,Onix,2023,Garanhuns,ativo,16,-8.878367,-36.488674
+12,102,Carro,TEST0012,Volkswagen,Polo,2025,Salvador,inativo,0,-12.98409,-38.515381
+13,103,Carro,TEST0013,Toyota,Corolla,2021,Fortaleza,em_manutencao,0,-3.713611,-38.533236
+14,104,Carro,TEST0014,Chevrolet,Onix,2023,Recife,ativo,46,-8.06389,-34.893131
+15,105,Carro,TEST0015,Volkswagen,Polo,2025,Olinda,inativo,0,-7.995,-34.851151
+16,106,Carro,TEST0016,Toyota,Corolla,2021,Maceió,em_manutencao,0,-9.637515,-35.699711
+17,107,Carro,TEST0017,Chevrolet,Onix,2023,Caruaru,ativo,76,-8.281551,-35.957175
+18,108,Carro,TEST0018,Volkswagen,Polo,2025,Garanhuns,inativo,0,-8.895459,-36.494518
+19,109,Carro,TEST0019,Toyota,Corolla,2021,Salvador,em_manutencao,0,-12.964524,-38.496859
+20,110,Carro,TEST0020,Chevrolet,Onix,2023,Fortaleza,ativo,15,-3.717432,-38.523606
+21,101,Moto,TEST0021,Honda,CG 160,2023,Olinda,ativo,56,-8.000717,-34.873467
+22,102,Moto,TEST0022,Yamaha,Factor 150,2025,Maceió,inativo,0,-9.660684,-35.717324
+23,103,Moto,TEST0023,Honda,CB 500,2021,Caruaru,em_manutencao,0,-8.299808,-35.986788
+24,104,Moto,TEST0024,Honda,CG 160,2023,Garanhuns,ativo,86,-8.90656,-36.505481
+25,105,Moto,TEST0025,Yamaha,Factor 150,2025,Salvador,inativo,0,-12.972273,-38.507007
+26,106,Moto,TEST0026,Honda,CB 500,2021,Fortaleza,em_manutencao,0,-3.737093,-38.53832
+27,107,Moto,TEST0027,Honda,CG 160,2023,Recife,ativo,25,-8.056921,-34.859534
+28,108,Moto,TEST0028,Yamaha,Factor 150,2025,Olinda,inativo,0,-8.002979,-34.850935
+29,109,Moto,TEST0029,Honda,CB 500,2021,Maceió,em_manutencao,0,-9.662954,-35.699735
+30,110,Moto,TEST0030,Honda,CG 160,2023,Caruaru,ativo,55,-8.296464,-35.980922
+31,101,Moto,TEST0031,Yamaha,Factor 150,2025,Garanhuns,inativo,0,-8.871019,-36.491
+32,102,Moto,TEST0032,Honda,CB 500,2021,Salvador,em_manutencao,0,-12.975422,-38.494215
+33,103,Moto,TEST0033,Honda,CG 160,2023,Fortaleza,ativo,85,-3.718186,-38.51566
+34,104,Moto,TEST0034,Yamaha,Factor 150,2025,Recife,inativo,0,-8.058438,-34.895716
+35,105,Moto,TEST0035,Honda,CB 500,2021,Olinda,em_manutencao,0,-8.016282,-34.86459
+36,106,Moto,TEST0036,Honda,CG 160,2023,Maceió,ativo,24,-9.661361,-35.691184
+37,107,Moto,TEST0037,Yamaha,Factor 150,2025,Caruaru,inativo,0,-8.267945,-35.983513
+38,108,Moto,TEST0038,Honda,CB 500,2021,Garanhuns,em_manutencao,0,-8.884382,-36.500775
+39,109,Moto,TEST0039,Honda,CG 160,2023,Salvador,ativo,54,-12.961118,-38.503246
+40,110,Moto,TEST0040,Yamaha,Factor 150,2025,Fortaleza,inativo,0,-3.741305,-38.536835
+41,101,Caminhão,TEST0041,Volvo,FH 540,2025,Olinda,inativo,0,-8.006445,-34.86479
+42,102,Caminhão,TEST0042,Scania,R450,2021,Maceió,em_manutencao,0,-9.646417,-35.692987
+43,103,Caminhão,TEST0043,Mercedes-Benz,Actros,2023,Caruaru,ativo,34,-8.287024,-35.987327
+44,104,Caminhão,TEST0044,Volvo,FH 540,2025,Garanhuns,inativo,0,-8.870698,-36.496219
+45,105,Caminhão,TEST0045,Scania,R450,2021,Salvador,em_manutencao,0,-12.994064,-38.519715
+46,106,Caminhão,TEST0046,Mercedes-Benz,Actros,2023,Fortaleza,ativo,64,-3.747514,-38.521602
+47,107,Caminhão,TEST0047,Volvo,FH 540,2025,Recife,inativo,0,-8.035917,-34.880114
+48,108,Caminhão,TEST0048,Scania,R450,2021,Olinda,em_manutencao,0,-8.026359,-34.860035
+49,109,Caminhão,TEST0049,Mercedes-Benz,Actros,2023,Maceió,ativo,3,-9.629955,-35.707735
+50,110,Caminhão,TEST0050,Volvo,FH 540,2025,Caruaru,inativo,0,-8.264157,-35.961669
+51,101,Caminhão,TEST0051,Scania,R450,2021,Garanhuns,em_manutencao,0,-8.910141,-36.487771
+52,102,Caminhão,TEST0052,Mercedes-Benz,Actros,2023,Salvador,ativo,33,-12.970432,-38.500121
+53,103,Caminhão,TEST0053,Volvo,FH 540,2025,Fortaleza,inativo,0,-3.741227,-38.521062
+54,104,Caminhão,TEST0054,Scania,R450,2021,Recife,em_manutencao,0,-8.063138,-34.879609
+55,105,Caminhão,TEST0055,Mercedes-Benz,Actros,2023,Olinda,ativo,63,-8.010751,-34.837147
+56,106,Caminhão,TEST0056,Volvo,FH 540,2025,Maceió,inativo,0,-9.634766,-35.718364
+57,107,Caminhão,TEST0057,Scania,R450,2021,Caruaru,em_manutencao,0,-8.282977,-35.988954
+58,108,Caminhão,TEST0058,Mercedes-Benz,Actros,2023,Garanhuns,ativo,2,-8.874095,-36.481779
+59,109,Caminhão,TEST0059,Volvo,FH 540,2025,Salvador,inativo,0,-12.985762,-38.496042
+60,110,Caminhão,TEST0060,Scania,R450,2021,Fortaleza,em_manutencao,0,-3.727541,-38.540586
+61,101,Van,TEST0061,Mercedes-Benz,Sprinter,2021,Olinda,em_manutencao,0,-7.9984,-34.853725
+62,102,Van,TEST0062,Renault,Master,2023,Maceió,ativo,73,-9.638655,-35.707686
+63,103,Van,TEST0063,Fiat,Ducato,2025,Caruaru,inativo,0,-8.302977,-35.983134
+64,104,Van,TEST0064,Mercedes-Benz,Sprinter,2021,Garanhuns,em_manutencao,0,-8.909821,-36.479436
+65,105,Van,TEST0065,Renault,Master,2023,Salvador,ativo,12,-12.962551,-38.488333
+66,106,Van,TEST0066,Fiat,Ducato,2025,Fortaleza,inativo,0,-3.739599,-38.544383
+67,107,Van,TEST0067,Mercedes-Benz,Sprinter,2021,Recife,em_manutencao,0,-8.03248,-34.859122
+68,108,Van,TEST0068,Renault,Master,2023,Olinda,ativo,42,-8.025474,-34.85586
+69,109,Van,TEST0069,Fiat,Ducato,2025,Maceió,inativo,0,-9.667031,-35.698476
+70,110,Van,TEST0070,Mercedes-Benz,Sprinter,2021,Caruaru,em_manutencao,0,-8.272367,-35.990964
+71,101,Van,TEST0071,Renault,Master,2023,Garanhuns,ativo,72,-8.891589,-36.494608
+72,102,Van,TEST0072,Fiat,Ducato,2025,Salvador,inativo,0,-12.987098,-38.486703
+73,103,Van,TEST0073,Mercedes-Benz,Sprinter,2021,Fortaleza,em_manutencao,0,-3.734974,-38.538228
+74,104,Van,TEST0074,Renault,Master,2023,Recife,ativo,11,-8.046028,-34.867803
+75,105,Van,TEST0075,Fiat,Ducato,2025,Olinda,inativo,0,-8.020854,-34.862831
+76,106,Van,TEST0076,Mercedes-Benz,Sprinter,2021,Maceió,em_manutencao,0,-9.629994,-35.702905
+77,107,Van,TEST0077,Renault,Master,2023,Caruaru,ativo,41,-8.285476,-35.975397
+78,108,Van,TEST0078,Fiat,Ducato,2025,Garanhuns,inativo,0,-8.90576,-36.507612
+79,109,Van,TEST0079,Mercedes-Benz,Sprinter,2021,Salvador,em_manutencao,0,-12.984177,-38.498068
+80,110,Van,TEST0080,Renault,Master,2023,Fortaleza,ativo,71,-3.742695,-38.537891
+81,101,Ônibus,TEST0081,Mercedes-Benz,OF-1721,2023,Olinda,ativo,21,-8.02606,-34.850056
+82,102,Ônibus,TEST0082,Volkswagen,17.230,2025,Maceió,inativo,0,-9.660642,-35.692683
+83,103,Ônibus,TEST0083,Volvo,B340M,2021,Caruaru,em_manutencao,0,-8.268615,-35.993266
+84,104,Ônibus,TEST0084,Mercedes-Benz,OF-1721,2023,Garanhuns,ativo,51,-8.90108,-36.489841
+85,105,Ônibus,TEST0085,Volkswagen,17.230,2025,Salvador,inativo,0,-12.989131,-38.516308
+86,106,Ônibus,TEST0086,Volvo,B340M,2021,Fortaleza,em_manutencao,0,-3.714479,-38.523858
+87,107,Ônibus,TEST0087,Mercedes-Benz,OF-1721,2023,Recife,ativo,81,-8.048693,-34.865615
+88,108,Ônibus,TEST0088,Volkswagen,17.230,2025,Olinda,inativo,0,-7.9966,-34.867684
+89,109,Ônibus,TEST0089,Volvo,B340M,2021,Maceió,em_manutencao,0,-9.665923,-35.711658
+90,110,Ônibus,TEST0090,Mercedes-Benz,OF-1721,2023,Caruaru,ativo,20,-8.286057,-35.977419
+91,101,Ônibus,TEST0091,Volkswagen,17.230,2025,Garanhuns,inativo,0,-8.881437,-36.489665
+92,102,Ônibus,TEST0092,Volvo,B340M,2021,Salvador,em_manutencao,0,-12.958333,-38.517663
+93,103,Ônibus,TEST0093,Mercedes-Benz,OF-1721,2023,Fortaleza,ativo,50,-3.735795,-38.533128
+94,104,Ônibus,TEST0094,Volkswagen,17.230,2025,Recife,inativo,0,-8.033133,-34.887054
+95,105,Ônibus,TEST0095,Volvo,B340M,2021,Olinda,em_manutencao,0,-8.021292,-34.857355
+96,106,Ônibus,TEST0096,Mercedes-Benz,OF-1721,2023,Maceió,ativo,80,-9.652925,-35.717758
+97,107,Ônibus,TEST0097,Volkswagen,17.230,2025,Caruaru,inativo,0,-8.293008,-35.959169
+98,108,Ônibus,TEST0098,Volvo,B340M,2021,Garanhuns,em_manutencao,0,-8.892875,-36.482146
+99,109,Ônibus,TEST0099,Mercedes-Benz,OF-1721,2023,Salvador,ativo,19,-12.975687,-38.519576
+100,110,Ônibus,TEST0100,Volkswagen,17.230,2025,Fortaleza,inativo,0,-3.711929,-38.513259
+101,101,Utilitário,TEST0101,Fiat,Toro,2025,Olinda,inativo,0,-7.99014,-34.838245
+102,102,Utilitário,TEST0102,Toyota,Hilux,2021,Maceió,em_manutencao,0,-9.635852,-35.722248
+103,103,Utilitário,TEST0103,Ford,Ranger,2023,Caruaru,ativo,90,-8.283574,-35.98755
+104,104,Utilitário,TEST0104,Fiat,Toro,2025,Garanhuns,inativo,0,-8.894558,-36.514255
+105,105,Utilitário,TEST0105,Toyota,Hilux,2021,Salvador,em_manutencao,0,-12.982541,-38.482188
+106,106,Utilitário,TEST0106,Ford,Ranger,2023,Fortaleza,ativo,29,-3.741292,-38.515337
+107,107,Utilitário,TEST0107,Fiat,Toro,2025,Recife,inativo,0,-8.0494,-34.88008
+108,108,Utilitário,TEST0108,Toyota,Hilux,2021,Olinda,em_manutencao,0,-7.990607,-34.835483
+109,109,Utilitário,TEST0109,Ford,Ranger,2023,Maceió,ativo,59,-9.647569,-35.700164
+110,110,Utilitário,TEST0110,Fiat,Toro,2025,Caruaru,inativo,0,-8.296808,-35.984232
+111,101,Utilitário,TEST0111,Toyota,Hilux,2021,Garanhuns,em_manutencao,0,-8.871852,-36.493433
+112,102,Utilitário,TEST0112,Ford,Ranger,2023,Salvador,ativo,89,-12.976012,-38.491681
+113,103,Utilitário,TEST0113,Fiat,Toro,2025,Fortaleza,inativo,0,-3.749613,-38.523333
+114,104,Utilitário,TEST0114,Toyota,Hilux,2021,Recife,em_manutencao,0,-8.047486,-34.862891
+115,105,Utilitário,TEST0115,Ford,Ranger,2023,Olinda,ativo,28,-8.022603,-34.836869
+116,106,Utilitário,TEST0116,Fiat,Toro,2025,Maceió,inativo,0,-9.666596,-35.721467
+117,107,Utilitário,TEST0117,Toyota,Hilux,2021,Caruaru,em_manutencao,0,-8.279199,-35.969091
+118,108,Utilitário,TEST0118,Ford,Ranger,2023,Garanhuns,ativo,58,-8.901192,-36.511805
+119,109,Utilitário,TEST0119,Fiat,Toro,2025,Salvador,inativo,0,-12.962089,-38.511751
+120,110,Utilitário,TEST0120,Toyota,Hilux,2021,Fortaleza,em_manutencao,0,-3.728119,-38.521925
+121,101,Ambulância,TEST0121,Mercedes-Benz,Sprinter Ambulância,2021,Olinda,em_manutencao,0,-8.012131,-34.851953
+122,102,Ambulância,TEST0122,Fiat,Ducato Ambulância,2023,Maceió,ativo,38,-9.648889,-35.691512
+123,103,Ambulância,TEST0123,Renault,Master Ambulância,2025,Caruaru,inativo,0,-8.29483,-35.967452
+124,104,Ambulância,TEST0124,Mercedes-Benz,Sprinter Ambulância,2021,Garanhuns,em_manutencao,0,-8.901053,-36.500769
+125,105,Ambulância,TEST0125,Fiat,Ducato Ambulância,2023,Salvador,ativo,68,-12.970832,-38.5096
+126,106,Ambulância,TEST0126,Renault,Master Ambulância,2025,Fortaleza,inativo,0,-3.739253,-38.516625
+127,107,Ambulância,TEST0127,Mercedes-Benz,Sprinter Ambulância,2021,Recife,em_manutencao,0,-8.064698,-34.878669
+128,108,Ambulância,TEST0128,Fiat,Ducato Ambulância,2023,Olinda,ativo,7,-7.988962,-34.835456
+129,109,Ambulância,TEST0129,Renault,Master Ambulância,2025,Maceió,inativo,0,-9.66687,-35.720374
+130,110,Ambulância,TEST0130,Mercedes-Benz,Sprinter Ambulância,2021,Caruaru,em_manutencao,0,-8.292392,-35.95877
+131,101,Ambulância,TEST0131,Fiat,Ducato Ambulância,2023,Garanhuns,ativo,37,-8.875365,-36.481429
+132,102,Ambulância,TEST0132,Renault,Master Ambulância,2025,Salvador,inativo,0,-12.982919,-38.51529
+133,103,Ambulância,TEST0133,Mercedes-Benz,Sprinter Ambulância,2021,Fortaleza,em_manutencao,0,-3.71855,-38.518558
+134,104,Ambulância,TEST0134,Fiat,Ducato Ambulância,2023,Recife,ativo,67,-8.043133,-34.857511
+135,105,Ambulância,TEST0135,Renault,Master Ambulância,2025,Olinda,inativo,0,-8.002741,-34.874987
+136,106,Ambulância,TEST0136,Mercedes-Benz,Sprinter Ambulância,2021,Maceió,em_manutencao,0,-9.637116,-35.716925
+137,107,Ambulância,TEST0137,Fiat,Ducato Ambulância,2023,Caruaru,ativo,6,-8.276464,-35.958543
+138,108,Ambulância,TEST0138,Renault,Master Ambulância,2025,Garanhuns,inativo,0,-8.905228,-36.511983
+139,109,Ambulância,TEST0139,Mercedes-Benz,Sprinter Ambulância,2021,Salvador,em_manutencao,0,-12.993419,-38.499471
+140,110,Ambulância,TEST0140,Fiat,Ducato Ambulância,2023,Fortaleza,ativo,36,-3.741006,-38.522507

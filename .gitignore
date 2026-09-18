@@ -1,5 +1,6 @@
 # Environment and local credentials
 .env
+guardrails.db
 
 # Python virtual environments and caches
 .venv/
