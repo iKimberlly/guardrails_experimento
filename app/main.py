@@ -1,5 +1,7 @@
+from contextlib import asynccontextmanager
 import time
 from pathlib import Path
+from dataclasses import asdict
 
 from fastapi import FastAPI, HTTPException, Request, Header
 from fastapi.responses import HTMLResponse
@@ -10,35 +12,49 @@ from .models import ValidationRequest, ValidationResponse
 from .regex_guard import validate_regex
 from .agent import classify
 
-# IMPORTANTE:
-# database.py está na raiz do projeto
 from .database import (
     get_connection,
     get_user_vehicles,
     get_user_vehicle,
     get_user_positions,
+    initialize_database,
 )
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    initialize_database()
+    yield
 
 
 app = FastAPI(
     title="Guardrails Experimental Environment",
-    version="0.2.0"
+    version="0.2.0",
+    lifespan=lifespan,
 )
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Arquivos estáticos
+
+# ============================================================
+# ARQUIVOS ESTÁTICOS
+# ============================================================
+
 app.mount(
     "/static",
     StaticFiles(directory=BASE_DIR / "static"),
     name="static"
 )
 
-# Templates
+
+# ============================================================
+# TEMPLATES
+# ============================================================
+
 templates = Jinja2Templates(
     directory=BASE_DIR / "templates"
 )
-
 
 # ============================================================
 # INTERFACE
@@ -187,16 +203,23 @@ def my_vehicle_positions(
 # ============================================================
 
 def run_regex(prompt: str):
+
     start = time.perf_counter()
 
     result = validate_regex(prompt)
 
-    latency = (time.perf_counter() - start) * 1000
+    latency = (
+        time.perf_counter() - start
+    ) * 1000
+
+    # RegexResult é um dataclass
+    result_dict = asdict(result)
 
     return {
-        **result,
+        **result_dict,
         "latency_ms": round(latency, 2),
-        "mode": "regex"
+        "mode": "regex",
+        "layer": "regex",
     }
 
 
@@ -215,16 +238,20 @@ def validate_regex_endpoint(
 # ============================================================
 
 def run_agent(prompt: str):
+
     start = time.perf_counter()
 
     result = classify(prompt)
 
-    latency = (time.perf_counter() - start) * 1000
+    latency = (
+        time.perf_counter() - start
+    ) * 1000
 
     return {
         **result,
         "latency_ms": round(latency, 2),
-        "mode": "agent"
+        "mode": "agent",
+        "layer": "agent",
     }
 
 
@@ -243,31 +270,67 @@ def validate_agent_endpoint(
 # ============================================================
 
 def run_combined(prompt: str):
+
     start = time.perf_counter()
+
+    # --------------------------------------------------------
+    # PRIMEIRA CAMADA: REGEX
+    # --------------------------------------------------------
 
     regex_result = validate_regex(prompt)
 
-    # Regex bloqueou
-    if not regex_result["approved"]:
-        latency = (time.perf_counter() - start) * 1000
+    # Converte o dataclass para dicionário
+    regex_dict = asdict(regex_result)
+
+
+    # --------------------------------------------------------
+    # REGEX BLOQUEOU
+    # --------------------------------------------------------
+
+    if not regex_dict["approved"]:
+
+        latency = (
+            time.perf_counter() - start
+        ) * 1000
 
         return {
-            **regex_result,
-            "latency_ms": round(latency, 2),
+            **regex_dict,
+
+            "latency_ms": round(
+                latency,
+                2
+            ),
+
             "mode": "combined",
-            "layer": "regex"
+
+            "layer": "regex",
         }
 
-    # Regex permitiu → envia para agente
+
+    # --------------------------------------------------------
+    # REGEX PERMITIU
+    # → envia para o AGENT
+    # --------------------------------------------------------
+
     agent_result = classify(prompt)
 
-    latency = (time.perf_counter() - start) * 1000
+
+    latency = (
+        time.perf_counter() - start
+    ) * 1000
+
 
     return {
         **agent_result,
-        "latency_ms": round(latency, 2),
+
+        "latency_ms": round(
+            latency,
+            2
+        ),
+
         "mode": "combined",
-        "layer": "agent"
+
+        "layer": "agent",
     }
 
 

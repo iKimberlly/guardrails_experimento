@@ -102,7 +102,43 @@ def create_tables():
     conn.commit()
     conn.close()
 
-if __name__ == "__main__":
+def initialize_database():
     create_tables()
+
+    with VEICULOS_CSV.open(encoding="utf-8-sig", newline="") as csv_file:
+        vehicles = list(csv.DictReader(csv_file))
+
+    user_ids = sorted({int(vehicle["usuario_id"]) for vehicle in vehicles})
+    conn = get_connection()
+    try:
+        conn.executemany(
+            """
+            INSERT OR IGNORE INTO usuarios (id, nome, email)
+            VALUES (?, ?, ?)
+            """,
+            [
+                (user_id, f"Usuário de teste {user_id}", f"usuario{user_id}@example.test")
+                for user_id in user_ids
+            ],
+        )
+        conn.executemany(
+            """
+            INSERT OR IGNORE INTO veiculos (
+                id, usuario_id, categoria, placa, marca, modelo, ano, cidade,
+                status, velocidade_kmh, latitude, longitude
+            )
+            VALUES (
+                :id, :usuario_id, :categoria, :placa, :marca, :modelo, :ano, :cidade,
+                :status, :velocidade_kmh, :latitude, :longitude
+            )
+            """,
+            vehicles,
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+if __name__ == "__main__":
+    initialize_database()
     print(f"Banco: {DATABASE_PATH}")
     print(f"Dataset: {VEICULOS_CSV}")
